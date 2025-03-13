@@ -16,6 +16,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5rem;
+  transition-duration: 0.3s;
 }
 
 .modal > div > button {
@@ -36,6 +37,7 @@
 
 .modal img {
   width: 100%;
+  border-radius: 0.5rem;
 }
 
 .hide {
