@@ -1,0 +1,49 @@
+header {
+  border-bottom: 1px solid #ededed;
+}
+
+header .container {
+  align-items: center;
+  padding: 0 2rem;
+  gap: 0.5rem;
+}
+
+header img:hover {
+  opacity: 0.8;
+}
+
+header input {
+  flex: 1;
+  margin: 0 2rem;
+}
+
+header button {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+header .button-prim {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+nav {
+  border-bottom: 1px solid #ededed;
+}
+
+nav .container {
+  padding: 0 2rem;
+}
+
+nav .link {
+  font-size: 0.85rem;
+  min-width: max-content;
+  padding: 0.5rem 1rem;
+  color: #5a6566;
+  background-color: #ffffff;
+  text-decoration: none;
+}
+
+nav .link:hover {
+  background-color: #edf2f2;
+}
