@@ -11,9 +11,12 @@ const Product_card = ({ elem }) => {
             <i className="fa-regular fa-heart"></i>
           </div>
           <div className="seller">
-            {/* {elem.owner.account.avatar.url && (
-              <img src={elem.owner.account.avatar.url} alt="" />
-            )} */}
+            {elem.owner.account.avatar && (
+              <img
+                src={elem.owner.account.avatar.secure_url}
+                alt="profil owner"
+              />
+            )}
             <p>{elem.owner.account.username}</p>
           </div>
         </div>

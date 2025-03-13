@@ -1,7 +1,9 @@
 article {
-  position: inherit;
+  display: flex;
+  flex-direction: column;
   width: calc((100% - 3rem) / 4);
   height: fit-content;
+  transition-duration: 0.3s;
 }
 
 .product-img {
@@ -81,4 +83,32 @@ article {
 .no-decoration {
   width: fit-content;
   text-decoration: none;
+}
+
+@media screen and (max-width: 1024px) {
+  article {
+    width: calc((100% - 2rem) / 3);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  article {
+    width: calc((100% - 1rem) / 2);
+  }
+}
+
+@media screen and (max-width: 440px) {
+  article {
+    width: 100%;
+    height: fit-content;
+  }
+
+  .product-img {
+    position: relative;
+    height: 20rem;
+  }
+
+  .product-text {
+    height: fit-content;
+  }
 }

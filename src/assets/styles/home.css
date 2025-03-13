@@ -1,5 +1,13 @@
 .hero {
+  display: relative;
   height: 60vh;
+}
+
+.wrapper {
+  display: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.5rem 2rem;
 }
 
 .hero > img {
@@ -19,23 +27,26 @@
   width: 100%;
 }
 
-.marketing {
+.wrapper .marketing {
   position: absolute;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  bottom: 18vh;
+  top: 14rem;
   background-color: #fff;
   padding: 2rem;
   border-radius: 1rem;
   width: 20rem;
+  height: fit-content;
+  transition-duration: 0.3s;
 }
 
 .marketing h1 {
   margin-bottom: 1rem;
 }
-.marketing button {
-  border: 1px solid #ffffff;
+.marketing button:last-child {
+  border: none;
+  text-decoration: underline;
 }
 
 section {
@@ -45,4 +56,41 @@ section {
   padding: 2rem;
   max-width: 1280px;
   margin: 0 auto;
+  transition-duration: 0.3s;
+}
+
+@media screen and (max-width: 1024px) {
+  .hero {
+    height: 40vh;
+  }
+
+  .wrapper {
+    padding: 0.5rem 1rem;
+  }
+
+  .wrapper .marketing {
+    top: 7rem;
+  }
+
+  section {
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    height: 30vh;
+  }
+
+  .wrapper .marketing {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  section {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 }
