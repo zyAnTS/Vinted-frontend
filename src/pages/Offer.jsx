@@ -32,7 +32,7 @@ const Offer = () => {
     };
 
     fetchData();
-  });
+  }, [id]);
 
   return isLoading ? (
     <>

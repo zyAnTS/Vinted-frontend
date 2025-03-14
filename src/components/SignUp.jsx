@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 
 import Input from "./Input";
 import axios from "axios";
@@ -7,16 +8,23 @@ const SignUp = ({
   username,
   email,
   password,
+  newsletter,
   setUsername,
   setEmail,
   setPassword,
-  showErrorUsername,
-  showErrorEmail,
-  showErrorPassword,
-  setShowErrorUsername,
-  setShowErrorEmail,
-  setShowErrorPassword,
+  setNewsletter,
+  errorUsername,
+  errorEmail,
+  errorPassword,
+  errorMessage,
+  setErrorUsername,
+  setErrorEmail,
+  setErrorPassword,
+  setErrorMessage,
   setStep,
+  isVisible,
+  setIsVisible,
+  setUserToken,
 }) => {
   return (
     <div
@@ -25,52 +33,69 @@ const SignUp = ({
         event.stopPropagation();
       }}
     >
-      <h1>S'inscrire</h1>
+      <h1>Création de compte</h1>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
           if (username === "") {
-            setShowErrorUsername(true);
+            setErrorUsername(true);
           } else if (email === "") {
-            setShowErrorEmail(true);
+            setErrorEmail(true);
           } else if (password.length < 9) {
-            setShowErrorPassword(true);
+            setErrorPassword(true);
           } else {
-            setShowErrorUsername(false);
-            setShowErrorEmail(false);
-            setShowErrorPassword(false);
-            await axios.post(
-              "https://lereacteur-vinted-api.herokuapp.com/user/signup"
-            );
-            alert("Account created !");
+            setErrorUsername(false);
+            setErrorEmail(false);
+            setErrorPassword(false);
+            try {
+              const response = await axios.post(
+                "https://lereacteur-vinted-api.herokuapp.com/user/signup",
+                {
+                  email: email,
+                  username: username,
+                  password: password,
+                  newsletter: newsletter,
+                }
+              );
+              if (response.data.token) {
+                Cookies.set("token", response.data.token);
+                setUserToken(response.data.token);
+                setIsVisible(!isVisible);
+              } else {
+                setErrorMessage(true);
+              }
+            } catch (error) {
+              setErrorMessage(true);
+              console.log(error.message);
+            }
           }
         }}
       >
         <Input
           label="Nom d'utilisateur"
-          id="name-signup"
+          id="name"
           type="text"
           value={username}
           set={setUsername}
-          showError={showErrorUsername}
+          showError={errorUsername}
           errorMessage="Veuillez renseigner un nom"
         />
         <Input
           label="Email"
-          id="email-signup"
+          id="email"
           type="email"
           value={email}
           set={setEmail}
-          showError={showErrorEmail}
+          showError={errorEmail}
           errorMessage="Veuillez renseigner un email"
         />
         <Input
           label="Mot de passe"
-          id="password-signup"
+          id="password"
           type="password"
           value={password}
           set={setPassword}
-          showError={showErrorPassword}
+          showError={errorPassword}
           errorMessage="Votre mot de passe doit faire 8 caractères minimum"
         />
         <label className="newsletter">
@@ -79,6 +104,10 @@ const SignUp = ({
             name="newsletter"
             id="newsletter"
             className="checkbox"
+            checked={newsletter}
+            onChange={() => {
+              setNewsletter(!newsletter);
+            }}
           />
           <span>S'inscrire à la newsletter</span>
         </label>
@@ -89,12 +118,14 @@ const SignUp = ({
           avoir au moins 18 ans.
         </p>
 
+        {errorMessage && <p className="error">Compte déjà existant</p>}
         <button className="button-prim" type="submit">
           S'inscrire
         </button>
       </form>
       <button
         onClick={() => {
+          setErrorMessage(false);
           setStep("LogIn");
         }}
       >

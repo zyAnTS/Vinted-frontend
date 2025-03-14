@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import logo from "/src/assets/img/logo.svg";
 import search from "/src/assets/img/search.png";
 import "/src/assets/styles/header.css";
 
-const Header = ({ isVisible, setIsVisible }) => {
+const Header = ({ isVisible, setIsVisible, userToken, setUserToken }) => {
+  const existingCookie = userToken;
+
   return (
     <>
       <header>
@@ -15,16 +18,35 @@ const Header = ({ isVisible, setIsVisible }) => {
           </Link>
           <div className="search">
             <img src={search} alt="" />
-            <input type="text" placeholder="Rechercher des articles" />
-          </div>
-          <div className="button-header">
-            <button
-              onClick={() => {
-                setIsVisible(!isVisible);
+            <input
+              type="text"
+              placeholder="Rechercher des articles"
+              onChange={(event) => {
+                set(event.target.value);
               }}
-            >
-              S'inscrire | Se connecter
-            </button>
+            />
+          </div>
+
+          <div className="button-header">
+            {existingCookie ? (
+              <button
+                onClick={() => {
+                  Cookies.remove("token");
+                  setUserToken(null);
+                }}
+              >
+                Se déconnecter
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsVisible(!isVisible);
+                }}
+              >
+                S'inscrire | Se connecter
+              </button>
+            )}
+
             <button className="button-prim">Vends tes articles</button>
           </div>
         </div>

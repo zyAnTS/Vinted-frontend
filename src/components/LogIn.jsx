@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 import Input from "./Input";
 import axios from "axios";
@@ -8,11 +9,16 @@ const LogIn = ({
   password,
   setEmail,
   setPassword,
-  showErrorEmail,
-  showErrorPassword,
-  setShowErrorEmail,
-  setShowErrorPassword,
+  errorEmail,
+  errorPassword,
+  errorMessage,
+  setErrorEmail,
+  setErrorPassword,
+  setErrorMessage,
   setStep,
+  isVisible,
+  setIsVisible,
+  setUserToken,
 }) => {
   return (
     <div
@@ -21,49 +27,70 @@ const LogIn = ({
         event.stopPropagation();
       }}
     >
-      <h1>Se Connecter</h1>
+      <h1>Bienvenue</h1>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
           if (email === "") {
-            setShowErrorEmail(true);
+            setErrorEmail(true);
           } else if (password.length < 9) {
-            setShowErrorPassword(true);
+            setErrorPassword(true);
           } else {
-            setShowErrorEmail(false);
-            setShowErrorPassword(false);
-            await axios.post(
-              "https://lereacteur-vinted-api.herokuapp.com/user/login"
-            );
-            alert("Connected !");
+            setErrorEmail(false);
+            setErrorPassword(false);
+            try {
+              const response = await axios.post(
+                "https://lereacteur-vinted-api.herokuapp.com/user/login",
+                {
+                  email: email,
+                  password: password,
+                }
+              );
+              console.log(response.data);
+              if (response.data.token) {
+                Cookies.set("token", response.data.token);
+                setUserToken(response.data.token);
+                setErrorMessage(false);
+                setIsVisible(!isVisible);
+              } else {
+                setErrorMessage(true);
+              }
+            } catch (error) {
+              setErrorMessage(true);
+              console.log(error.message);
+            }
           }
         }}
       >
         <Input
           label="Email"
-          id="email-login"
+          id="email"
           type="email"
           value={email}
           set={setEmail}
-          showError={showErrorEmail}
+          showError={errorEmail}
           errorMessage="Veuillez renseigner un email"
         />
         <Input
           label="Mot de passe"
-          id="password-login"
+          id="password"
           type="password"
           value={password}
           set={setPassword}
-          showError={showErrorPassword}
+          showError={errorPassword}
           errorMessage="Votre mot de passe doit faire 8 caractères minimum"
         />
 
+        {errorMessage && (
+          <p className="error">Email ou mot de passe incorrect</p>
+        )}
         <button className="button-prim" type="submit">
           Se connecter
         </button>
       </form>
       <button
         onClick={() => {
+          setErrorMessage(false);
           setStep("SignUp");
         }}
       >

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import axios from "axios";
 
@@ -19,6 +20,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
+  const [userToken, setUserToken] = useState(Cookies.get("token") || null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,7 +38,7 @@ function App() {
     };
 
     fetchData();
-  });
+  }, []);
 
   return isLoading ? (
     <>
@@ -43,14 +46,23 @@ function App() {
     </>
   ) : (
     <Router>
-      <Header isVisible={isVisible} setIsVisible={setIsVisible} />
+      <Header
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        userToken={userToken}
+        setUserToken={setUserToken}
+      />
       <Routes>
         <Route path="/" element={<Home offers={data.offers} />} />
         <Route path="/offer/:id" element={<Offer />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
-      <Authentication isVisible={isVisible} setIsVisible={setIsVisible} />
+      <Authentication
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        setUserToken={setUserToken}
+      />
     </Router>
   );
 }
