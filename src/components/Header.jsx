@@ -72,8 +72,8 @@ const Header = ({
               type="checkbox"
               id="sortPrice"
               value={sortPrice}
-              onChange={(event) => {
-                setSortPrice(event.target.checked);
+              onClick={() => {
+                setSortPrice(!sortPrice);
               }}
             />
             Du moins au plus cher
