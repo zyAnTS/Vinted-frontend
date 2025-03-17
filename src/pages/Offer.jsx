@@ -55,30 +55,34 @@ const Offer = () => {
           <p className="price">{data.product_price} €</p>
           <div className="details">
             <div className="col1">
-              {data.product_details[0].MARQUE && <p>MARQUE :</p>}
-              {data.product_details[0].TAILLE && <p>TAILLE :</p>}
-              {data.product_details[0].ÉTAT && <p>ETAT :</p>}
-              {data.product_details[0].COULEUR && <p>COULEUR :</p>}
-              {data.product_details[0].EMPLACEMENT && <p>EMPLACEMENT :</p>}
-              <p>MODE DE PAIEMENT :</p>
+              {data.product_details.map((elem) => {
+                return (
+                  <>
+                    {elem.MARQUE && <p>MARQUE :</p>}
+                    {elem.TAILLE && <p>TAILLE :</p>}
+                    {elem.ÉTAT && <p>ETAT :</p>}
+                    {elem.COULEUR && <p>COULEUR :</p>}
+                    {elem.EMPLACEMENT && <p>EMPLACEMENT :</p>}
+                    {elem["MODES DE PAIEMENT"] && <p>MODES DE PAIEMENT :</p>}
+                  </>
+                );
+              })}
             </div>
             <div className="col2">
-              {data.product_details[0].MARQUE && (
-                <p>{data.product_details[0].MARQUE}</p>
-              )}
-              {data.product_details[0].TAILLE && (
-                <p>{data.product_details[0].TAILLE}:</p>
-              )}
-              {data.product_details[0].ÉTAT && (
-                <p>{data.product_details[0].ÉTAT}</p>
-              )}
-              {data.product_details[0].COULEUR && (
-                <p>{data.product_details[0].COULEUR}</p>
-              )}
-              {data.product_details[0].EMPLACEMENT && (
-                <p>{data.product_details[0].EMPLACEMENT}</p>
-              )}
-              <p>Paypal</p>
+              {data.product_details.map((elem) => {
+                return (
+                  <>
+                    {elem.MARQUE && <p>{elem.MARQUE}</p>}
+                    {elem.TAILLE && <p>{elem.TAILLE}</p>}
+                    {elem.ÉTAT && <p>{elem.ÉTAT}</p>}
+                    {elem.COULEUR && <p>{elem.COULEUR}</p>}
+                    {elem.EMPLACEMENT && <p>{elem.EMPLACEMENT}</p>}
+                    {elem["MODES DE PAIEMENT"] && (
+                      <p>{elem["MODES DE PAIEMENT"]}</p>
+                    )}
+                  </>
+                );
+              })}
             </div>
           </div>
           {data.product_name && <h2>{data.product_name}</h2>}

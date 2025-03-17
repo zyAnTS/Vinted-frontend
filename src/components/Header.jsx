@@ -1,14 +1,26 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import logo from "/src/assets/img/logo.svg";
-import search from "/src/assets/img/search.png";
+import glass from "/src/assets/img/search.png";
 import "/src/assets/styles/header.css";
 
-const Header = ({ isVisible, setIsVisible, userToken, setUserToken }) => {
-  const existingCookie = userToken;
-
+const Header = ({
+  isVisible,
+  setIsVisible,
+  userToken,
+  setUserToken,
+  search,
+  setSearch,
+  priceMin,
+  setPriceMin,
+  priceMax,
+  setPriceMax,
+  sortPrice,
+  setSortPrice,
+}) => {
   return (
     <>
       <header>
@@ -17,18 +29,19 @@ const Header = ({ isVisible, setIsVisible, userToken, setUserToken }) => {
             <img src={logo} alt="Logo Vinted" />
           </Link>
           <div className="search">
-            <img src={search} alt="" />
+            <img src={glass} alt="" />
             <input
               type="text"
               placeholder="Rechercher des articles"
+              id={search}
+              value={search}
               onChange={(event) => {
-                set(event.target.value);
+                setSearch(event.target.value);
               }}
             />
           </div>
-
           <div className="button-header">
-            {existingCookie ? (
+            {userToken ? (
               <button
                 onClick={() => {
                   Cookies.remove("token");
@@ -51,13 +64,44 @@ const Header = ({ isVisible, setIsVisible, userToken, setUserToken }) => {
           </div>
         </div>
       </header>
-      {/* <nav>
+      <nav>
         <div className="container">
-          <Link to="/offer" className="link">
-            Offer
-          </Link>
+          <span>Trier : </span>
+          <label htmlFor="sortPrice">
+            <input
+              type="checkbox"
+              id="sortPrice"
+              value={sortPrice}
+              onChange={(event) => {
+                setSortPrice(event.target.checked);
+              }}
+            />
+            Du moins au plus cher
+          </label>
+          <label htmlFor="priceMin">
+            Prix minimum
+            <input
+              type="number"
+              value={priceMin}
+              id="priceMin"
+              onChange={(event) => {
+                setPriceMin(event.target.value);
+              }}
+            />
+          </label>
+          <label htmlFor="priceMax">
+            Prix maximum
+            <input
+              type="number"
+              value={priceMax}
+              id="priceMax"
+              onChange={(event) => {
+                setPriceMax(event.target.value);
+              }}
+            />
+          </label>
         </div>
-      </nav> */}
+      </nav>
     </>
   );
 };
