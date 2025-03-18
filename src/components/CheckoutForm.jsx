@@ -5,20 +5,22 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const CheckoutForm = () => {
+import "/src/assets/styles/payment.css";
+
+const CheckoutForm = ({ title, price }) => {
   // Permet de faire une requête à Stripe pour confirmer le paiement
   const stripe = useStripe();
   // Permet de récupérer le contenu des inputs
   const elements = useElements();
+  const navigate = useNavigate();
 
-  // State qui gère les messages d'erreurs
   const [errorMessage, setErrorMessage] = useState(null);
-  // State qui gère le fait que le paiement a été effectué
   const [completed, setCompleted] = useState(false);
-  // State qui gère le fait qu'on est en train de payer
   const [isLoading, setIsLoading] = useState(false);
+  const total = price + 1.77;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -72,16 +74,59 @@ const CheckoutForm = () => {
   };
 
   return completed ? (
-    <p>Paiement effectué</p>
+    <div className="sell">
+      <div className="form-payment">
+        <h3>Paiement effectué</h3>
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Retourner à l'accueil
+        </button>
+      </div>
+    </div>
   ) : (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button type="submit" disabled={!stripe || !elements || isLoading}>
-        Pay
-      </button>
-      {/* Éventuel message d'erreur */}
-      {errorMessage && <div>{errorMessage}</div>}
-    </form>
+    <div className="sell">
+      <div className="form-payment">
+        <p>Résumé de la commande</p>
+        <div className="row">
+          <p>Commande</p>
+          <p>{price} €</p>
+        </div>
+        <div className="row">
+          <p>Frais de protection acheteurs</p>
+          <p>0.59 €</p>
+        </div>
+        <div className="row">
+          <p>Frais de port</p>
+          <p>1.18 €</p>
+        </div>
+        <div className="total">
+          <p>Total</p>
+          <p>{total} €</p>
+        </div>
+
+        <div className="edito-payment">
+          <p>
+            Il ne vous reste plus qu'une étape pour vous offrir{" "}
+            <span>{title}</span>. Vous allez payer <span>{total} €</span> (Frais
+            de protection et frais de port inclus).
+          </p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <PaymentElement />
+          <button
+            type="submit"
+            className="button-prim"
+            disabled={!stripe || !elements || isLoading}
+          >
+            Payer
+          </button>
+          {errorMessage && <div>{errorMessage}</div>}
+        </form>
+      </div>
+    </div>
   );
 };
 

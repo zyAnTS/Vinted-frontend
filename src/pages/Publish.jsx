@@ -52,7 +52,7 @@ const Publish = ({ userToken }) => {
                   }
                 );
                 console.log(response.data);
-                navigate("/offers/" + response.data._id);
+                navigate("/offer/" + response.data._id);
               } catch (error) {
                 console.log(error.response);
               }

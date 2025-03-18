@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import "/src/assets/styles/picture_modal.css";
 
-const Picture_modal = ({ elem }) => {
+const Picture_modal = ({ elem, index }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
@@ -11,6 +11,7 @@ const Picture_modal = ({ elem }) => {
       <img
         src={elem.url}
         alt="Photo du produit"
+        key={index}
         onClick={() => {
           setIsClicked(!isClicked);
         }}

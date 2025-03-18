@@ -1,0 +1,41 @@
+.form-payment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+}
+
+.form-payment > p {
+  font-size: 0.85rem;
+  color: #5a6566;
+  width: 100%;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #5a6566;
+  width: 100%;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.12rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 2rem 0 1rem;
+  border-top: 1px solid #cccccc;
+}
+
+.edito-payment {
+  padding-bottom: 2rem;
+
+  border-bottom: 1px solid #cccccc;
+}

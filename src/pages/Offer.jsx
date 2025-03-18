@@ -44,11 +44,11 @@ const Offer = ({ carouselOffers, userToken, isVisible, setIsVisible }) => {
       <div className="container">
         <div className="col1">
           <div className="main-picture">
-            <Picture_modal elem={data.product_pictures[0]} />
+            <Picture_modal elem={data.product_pictures[0]} index={0} />
           </div>
           <div className="pictures">
-            {data.product_pictures.slice(1).map((elem) => {
-              return <Picture_modal elem={elem} />;
+            {data.product_pictures.slice(1).map((elem, index) => {
+              return <Picture_modal elem={elem} index={index} />;
             })}
           </div>
         </div>
@@ -56,30 +56,48 @@ const Offer = ({ carouselOffers, userToken, isVisible, setIsVisible }) => {
           <p className="price">{data.product_price} €</p>
           <div className="details">
             <div className="col1">
-              {data.product_details.map((elem) => {
+              {data.product_details.map((elem, index) => {
                 return (
                   <>
-                    {elem.MARQUE && <p>MARQUE :</p>}
-                    {elem.TAILLE && <p>TAILLE :</p>}
-                    {elem.ÉTAT && <p>ETAT :</p>}
-                    {elem.COULEUR && <p>COULEUR :</p>}
-                    {elem.EMPLACEMENT && <p>EMPLACEMENT :</p>}
-                    {elem["MODES DE PAIEMENT"] && <p>MODES DE PAIEMENT :</p>}
+                    {elem.MARQUE && <p key={elem.MARQUE + index}>MARQUE :</p>}
+                    {elem.TAILLE && <p key={elem.TAILLE + index}>TAILLE :</p>}
+                    {elem.ÉTAT && <p key={elem.ÉTAT + index}>ETAT :</p>}
+                    {elem.COULEUR && (
+                      <p key={elem.COULEUR + index}> COULEUR :</p>
+                    )}
+                    {elem.EMPLACEMENT && (
+                      <p key={elem.EMPLACEMENT + index}>EMPLACEMENT :</p>
+                    )}
+                    {elem["MODES DE PAIEMENT"] && (
+                      <p key={elem["MODES DE PAIEMENT"] + index}>
+                        MODES DE PAIEMENT :
+                      </p>
+                    )}
                   </>
                 );
               })}
             </div>
             <div className="col2">
-              {data.product_details.map((elem) => {
+              {data.product_details.map((elem, index) => {
                 return (
                   <>
-                    {elem.MARQUE && <p>{elem.MARQUE}</p>}
-                    {elem.TAILLE && <p>{elem.TAILLE}</p>}
-                    {elem.ÉTAT && <p>{elem.ÉTAT}</p>}
-                    {elem.COULEUR && <p>{elem.COULEUR}</p>}
-                    {elem.EMPLACEMENT && <p>{elem.EMPLACEMENT}</p>}
+                    {elem.MARQUE && (
+                      <p key={elem.MARQUE + index}>{elem.MARQUE}</p>
+                    )}
+                    {elem.TAILLE && (
+                      <p key={elem.TAILLE + index}>{elem.TAILLE}</p>
+                    )}
+                    {elem.ÉTAT && <p key={elem.ÉTAT + index}>{elem.ÉTAT}</p>}
+                    {elem.COULEUR && (
+                      <p key={elem.COULEUR + index}>{elem.COULEUR}</p>
+                    )}
+                    {elem.EMPLACEMENT && (
+                      <p key={elem.EMPLACEMENT + index}>{elem.EMPLACEMENT}</p>
+                    )}
                     {elem["MODES DE PAIEMENT"] && (
-                      <p>{elem["MODES DE PAIEMENT"]}</p>
+                      <p key={elem["MODES DE PAIEMENT"] + index}>
+                        {elem["MODES DE PAIEMENT"]}
+                      </p>
                     )}
                   </>
                 );
@@ -91,8 +109,8 @@ const Offer = ({ carouselOffers, userToken, isVisible, setIsVisible }) => {
           <div className="seller-offer">
             <span>Vendu par :</span>
             <div className="seller">
-              {data.owner.account.avatar.url && (
-                <img src={data.owner.account.avatar.url} alt="" />
+              {data.owner.account.avatar && (
+                <img src={data.owner.account.avatar.secure_url} alt="" />
               )}
               {data.owner.account.username && (
                 <p>{data.owner.account.username}</p>

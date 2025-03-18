@@ -52,6 +52,7 @@ main .container {
 
 .container > .col2 {
   max-width: 20rem;
+  min-width: 15rem;
   position: sticky;
   top: 1rem;
   display: flex;
