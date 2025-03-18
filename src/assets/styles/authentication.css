@@ -92,6 +92,14 @@ label {
   height: 1.5rem;
 }
 
+.checkbox-label {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+}
+
 .input-error {
   border: 2px solid #a80000;
 }
@@ -108,4 +116,8 @@ label {
 .form-show {
   width: 100%;
   display: inherit;
+}
+
+.opacity-zero {
+  opacity: 0;
 }

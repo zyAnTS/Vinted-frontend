@@ -40,6 +40,7 @@ header img:hover {
   gap: 0.5rem;
   transition-duration: 0.3s;
 }
+
 header button {
   font-size: 0.85rem;
   padding: 0.5rem 1rem;
@@ -50,23 +51,9 @@ header .button-prim {
   padding: 0.5rem 1rem;
 }
 
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid #ededed;
-  background-color: #ffffff;
-}
-
-nav .container {
+.flex {
   display: flex;
-  align-items: center;
-  padding: 0.5rem 2rem;
-}
-
-nav label {
-  flex-direction: row;
-  align-items: center;
+  width: 50%;
 }
 
 @media screen and (max-width: 1024px) {
@@ -88,9 +75,9 @@ nav label {
   .button-header {
     width: 100%;
   }
-
-  .button-header button {
-    width: 100%;
+  .button-header button,
+  .button-header .button-prim {
+    flex: 1;
   }
 
   header .container {

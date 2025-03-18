@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import logo from "/src/assets/img/logo.svg";
@@ -14,13 +14,8 @@ const Header = ({
   setUserToken,
   search,
   setSearch,
-  priceMin,
-  setPriceMin,
-  priceMax,
-  setPriceMax,
-  sortPrice,
-  setSortPrice,
 }) => {
+  const navigate = useNavigate();
   return (
     <>
       <header>
@@ -60,48 +55,19 @@ const Header = ({
               </button>
             )}
 
-            <button className="button-prim">Vends tes articles</button>
+            <button
+              className="button-prim"
+              onClick={() => {
+                {
+                  userToken ? navigate("/publish") : setIsVisible(!isVisible);
+                }
+              }}
+            >
+              Vendez vos articles
+            </button>
           </div>
         </div>
       </header>
-      <nav>
-        <div className="container">
-          <span>Trier : </span>
-          <label htmlFor="sortPrice">
-            <input
-              type="checkbox"
-              id="sortPrice"
-              value={sortPrice}
-              onClick={() => {
-                setSortPrice(!sortPrice);
-              }}
-            />
-            Du moins au plus cher
-          </label>
-          <label htmlFor="priceMin">
-            Prix minimum
-            <input
-              type="number"
-              value={priceMin}
-              id="priceMin"
-              onChange={(event) => {
-                setPriceMin(event.target.value);
-              }}
-            />
-          </label>
-          <label htmlFor="priceMax">
-            Prix maximum
-            <input
-              type="number"
-              value={priceMax}
-              id="priceMax"
-              onChange={(event) => {
-                setPriceMax(event.target.value);
-              }}
-            />
-          </label>
-        </div>
-      </nav>
     </>
   );
 };

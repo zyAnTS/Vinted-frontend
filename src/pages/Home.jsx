@@ -1,80 +1,97 @@
 import React from "react";
-import { useState, useEffect } from "react";
-
-import axios from "axios";
 
 import "/src/assets/styles/home.css";
 import "/src/assets/styles/Product_card.css";
 
 import Hero from "../components/Hero";
 import Product_card from "../components/Product_card";
-import Loading from "../components/Loading";
 
-const Home = ({ search, priceMin, priceMax, sortPrice }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState(null);
-  console.log(search); // affiche bien l'event target et le rerender
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // sécuriser les filtres
-        let filters = "";
-
-        if (search) {
-          filters += "?search=" + search;
-        }
-
-        if (priceMin) {
-          if (filters) {
-            filters += "&priceMin=" + priceMin;
-          } else {
-            filters += "?priceMin=" + priceMin;
-          }
-        }
-
-        if (priceMax) {
-          if (filters) {
-            filters += "&priceMax=" + priceMax;
-          } else {
-            filters += "?priceMax=" + priceMax;
-          }
-        }
-
-        if (sortPrice) {
-          if (filters) {
-            filters += "&sortPrice=" + sortPrice;
-          } else {
-            filters += "?sortPrice=" + sortPrice;
-          }
-        }
-
-        // const response = await axios.get("http://localhost:3000/");
-        const response = await axios.get(
-          "https://lereacteur-vinted-api.herokuapp.com/v2/offers" + filters
-        );
-
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
-
-    fetchData();
-  }, [search, priceMin, priceMax, sortPrice]);
-
-  return isLoading ? (
-    <>
-      <Loading />
-    </>
-  ) : (
+const Home = ({
+  data,
+  priceMin,
+  setPriceMin,
+  priceMax,
+  setPriceMax,
+  sortPrice,
+  setSortPrice,
+  page,
+  setPage,
+  limit,
+}) => {
+  return (
     <>
       <Hero />
       <section>
+        <nav>
+          <div className="sort">
+            <span>Trier : </span>
+            <label htmlFor="sortPrice">
+              <input
+                type="checkbox"
+                id="sortPrice"
+                value={sortPrice}
+                className="checkbox"
+                onClick={() => {
+                  setSortPrice(!sortPrice);
+                }}
+              />
+              Du moins au plus cher
+            </label>
+          </div>
+          <div className="filters">
+            <label htmlFor="priceMin">
+              Prix min.
+              <input
+                type="number"
+                value={priceMin}
+                id="priceMin"
+                onChange={(event) => {
+                  setPriceMin(event.target.value);
+                }}
+              />
+            </label>
+            <label htmlFor="priceMax">
+              Prix max.
+              <input
+                type="number"
+                value={priceMax}
+                id="priceMax"
+                onChange={(event) => {
+                  setPriceMax(event.target.value);
+                }}
+              />
+            </label>
+          </div>
+        </nav>
         {data.offers.map((elem) => {
           return <Product_card elem={elem} key={elem._id} />;
         })}
+
+        <div className="page">
+          <button
+            className={page < 2 ? "opacity-zero" : ""}
+            onClick={
+              page > 1 &&
+              (() => {
+                setPage(page - 1);
+              })
+            }
+          >
+            Précédent
+          </button>
+          <span>page : {page}</span>
+          <button
+            className={data.count / limit > page ? "" : "opacity-zero"}
+            onClick={
+              data.count / limit > page &&
+              (() => {
+                setPage(page + 1);
+              })
+            }
+          >
+            Suivant
+          </button>
+        </div>
       </section>
     </>
   );

@@ -1,0 +1,18 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+  flex-direction: 1rem;
+  gap: 1rem;
+  width: 100%;
+  padding: 0 2rem;
+}
+
+.scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: scroll;
+}
+
+.scroll article {
+  min-width: 18rem;
+}

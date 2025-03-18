@@ -6,10 +6,11 @@ import axios from "axios";
 
 import Loading from "../components/Loading";
 import Picture_modal from "../components/picture_modal";
+import Carousel from "../components/Carousel";
 
 import "/src/assets/styles/offer.css";
 
-const Offer = () => {
+const Offer = ({ carouselOffers }) => {
   const { id } = useParams();
   //   console.log(params); // {id: '777'}
   console.log(id);
@@ -100,6 +101,9 @@ const Offer = () => {
           </div>
           <button className="button-prim">Ajouter au panier</button>
         </div>
+      </div>
+      <div className="container">
+        <Carousel carouselOffers={carouselOffers} />
       </div>
     </main>
   );

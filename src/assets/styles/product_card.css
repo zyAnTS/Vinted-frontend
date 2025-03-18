@@ -2,6 +2,7 @@ article {
   display: flex;
   flex-direction: column;
   width: calc((100% - 3rem) / 4);
+  min-width: 11rem;
   height: fit-content;
   transition-duration: 0.3s;
 }
