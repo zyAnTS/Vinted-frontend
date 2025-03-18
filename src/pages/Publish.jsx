@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Publish = ({ userToken }) => {
   const [file, setFile] = useState(null);
@@ -13,7 +14,9 @@ const Publish = ({ userToken }) => {
   const [price, setPrice] = useState("");
   const [trade, setTrade] = useState(false);
 
-  return (
+  const navigate = useNavigate();
+
+  return userToken ? (
     <>
       <div className="sell">
         <div className="container">
@@ -34,7 +37,7 @@ const Publish = ({ userToken }) => {
 
               try {
                 const response = await axios.post(
-                  "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
+                  "https://site--vinted--mz8pkhlfl2x7.code.run/offer/publish",
                   formData,
                   {
                     headers: {
@@ -181,6 +184,8 @@ const Publish = ({ userToken }) => {
         </div>
       </div>
     </>
+  ) : (
+    navigate("/")
   );
 };
 
