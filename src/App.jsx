@@ -6,7 +6,7 @@ import axios from "axios";
 
 import "/src/assets/styles/App.css";
 
-import NotFound from "./pages/NotFOund";
+import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Publish from "./pages/Publish";
