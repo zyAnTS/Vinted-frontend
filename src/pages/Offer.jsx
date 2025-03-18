@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import Loading from "../components/Loading";
-import Picture_modal from "../components/picture_modal";
+import Picture_modal from "../components/Picture_modal";
 import Carousel from "../components/Carousel";
 
 import "/src/assets/styles/offer.css";
