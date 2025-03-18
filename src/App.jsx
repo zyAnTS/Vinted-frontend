@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFOund";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Publish from "./pages/Publish";
+import Payment from "./pages/Payment";
 import Loading from "./components/Loading";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -79,9 +80,12 @@ function App() {
           }
         }
 
-        // const response = await axios.get("http://localhost:3000/");
+        // http://localhost:3000/
+        // https://lereacteur-vinted-api.herokuapp.com/v2 <== Serveur LeReacteur
+        // https://site--vinted--mz8pkhlfl2x7.code.run
+
         const response = await axios.get(
-          "https://site--vinted--mz8pkhlfl2x7.code.run/offers" + filters
+          "https://lereacteur-vinted-api.herokuapp.com/v2/offers" + filters
         );
 
         setData(response.data);
@@ -127,8 +131,19 @@ function App() {
             />
           }
         />
-        <Route path="/offer/:id" element={<Offer carouselOffers={data} />} />
+        <Route
+          path="/offer/:id"
+          element={
+            <Offer
+              carouselOffers={data}
+              userToken={userToken}
+              isVisible={isVisible}
+              setIsVisible={setIsVisible}
+            />
+          }
+        />
         <Route path="/publish" element={<Publish userToken={userToken} />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

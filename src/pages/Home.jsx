@@ -42,9 +42,10 @@ const Home = ({
             <label htmlFor="priceMin">
               Prix min.
               <input
-                type="number"
+                type="text"
                 value={priceMin}
                 id="priceMin"
+                placeholder="0 €"
                 onChange={(event) => {
                   setPriceMin(event.target.value);
                 }}
@@ -53,9 +54,10 @@ const Home = ({
             <label htmlFor="priceMax">
               Prix max.
               <input
-                type="number"
+                type="text"
                 value={priceMax}
                 id="priceMax"
+                placeholder="1000 €"
                 onChange={(event) => {
                   setPriceMax(event.target.value);
                 }}

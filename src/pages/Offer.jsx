@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 
@@ -10,10 +10,9 @@ import Carousel from "../components/Carousel";
 
 import "/src/assets/styles/offer.css";
 
-const Offer = ({ carouselOffers }) => {
+const Offer = ({ carouselOffers, userToken, isVisible, setIsVisible }) => {
   const { id } = useParams();
-  //   console.log(params); // {id: '777'}
-  console.log(id);
+  const navigate = useNavigate();
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,10 +20,11 @@ const Offer = ({ carouselOffers }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // https://lereacteur-vinted-api.herokuapp.com/v2 <== Serveur LeReacteur
+        // https://site--vinted--mz8pkhlfl2x7.code.run
         const response = await axios.get(
           "https://lereacteur-vinted-api.herokuapp.com/v2/offers/" + id
         );
-
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -99,7 +99,23 @@ const Offer = ({ carouselOffers }) => {
               )}
             </div>
           </div>
-          <button className="button-prim">Ajouter au panier</button>
+          <button
+            className="button-prim"
+            onClick={() => {
+              {
+                userToken
+                  ? navigate("/payment", {
+                      state: {
+                        title: data.product_name,
+                        price: data.product_price,
+                      },
+                    })
+                  : setIsVisible(!isVisible);
+              }
+            }}
+          >
+            Ajouter au panier
+          </button>
         </div>
       </div>
       <div className="container">

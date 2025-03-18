@@ -12,7 +12,7 @@ const Publish = ({ userToken }) => {
   const [condition, setCondition] = useState("");
   const [city, setCity] = useState("");
   const [price, setPrice] = useState("");
-  const [trade, setTrade] = useState(false);
+  const [exchange, setExchange] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,7 +23,8 @@ const Publish = ({ userToken }) => {
           <form
             onSubmit={async (event) => {
               event.preventDefault();
-              const formData = new FormData(); // n'oubliez pas les parenthèses !
+
+              const formData = new FormData();
               formData.append("title", title);
               formData.append("picture", file);
               formData.append("description", description);
@@ -33,11 +34,15 @@ const Publish = ({ userToken }) => {
               formData.append("condition", condition);
               formData.append("city", city);
               formData.append("price", price);
-              formData.append("trade", trade);
+              formData.append("exchange", exchange);
 
               try {
+                // https://lereacteur-vinted-api.herokuapp.com/v2 <== Serveur LeReacteur
+                // https://site--vinted--mz8pkhlfl2x7.code.run
+
                 const response = await axios.post(
-                  "https://site--vinted--mz8pkhlfl2x7.code.run/offer/publish",
+                  "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
+
                   formData,
                   {
                     headers: {
@@ -47,6 +52,7 @@ const Publish = ({ userToken }) => {
                   }
                 );
                 console.log(response.data);
+                navigate("/offers/" + response.data._id);
               } catch (error) {
                 console.log(error.response);
               }
@@ -54,14 +60,18 @@ const Publish = ({ userToken }) => {
           >
             <h1>Vendez vos articles</h1>
             <div className="form-block-file">
-              <input
-                type="file"
-                multiple={true}
-                onChange={async (event) => {
-                  setFile(event.target.files);
-                }}
-              />
-              <button>Ajouter une photo</button>
+              <label className="button-sec" htmlFor="file">
+                <input
+                  className="form-hide"
+                  type="file"
+                  id="file"
+                  // multiple={true}
+                  onChange={(event) => {
+                    setFile(event.target.files[0]);
+                  }}
+                />
+                + Ajouter une photo
+              </label>
             </div>
             <div className="form-block">
               <label htmlFor="title">
@@ -79,7 +89,6 @@ const Publish = ({ userToken }) => {
               <label htmlFor="description">
                 Décrivez votre article
                 <textarea
-                  row="5"
                   value={description}
                   id="description"
                   placeholder="Ex: porté quelquefois, taille correctement"
@@ -164,14 +173,14 @@ const Publish = ({ userToken }) => {
                   }}
                 />
               </label>
-              <label className="checkbox-label" htmlFor="trade">
+              <label className="checkbox-label" htmlFor="exchange">
                 <input
                   className="checkbox"
                   type="checkbox"
-                  value={trade}
-                  id="trade"
+                  value={exchange}
+                  id="exchange"
                   onChange={() => {
-                    setTrade(!trade);
+                    setExchange(!exchange);
                   }}
                 />
                 Je suis intéressé(e) par les échanges

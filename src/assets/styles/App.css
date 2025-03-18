@@ -66,6 +66,23 @@ button:hover {
   opacity: 0.8;
 }
 
+.button-sec {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  min-width: max-content;
+  padding: 1rem 1rem;
+  color: #007782;
+  background-color: #ffffff;
+  border: 1px solid #007782;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.button-sec:hover {
+  background-color: #edf2f2;
+}
+
 input {
   font-family: "Trebuchet MS", sans-serif;
   font-size: 1rem;
