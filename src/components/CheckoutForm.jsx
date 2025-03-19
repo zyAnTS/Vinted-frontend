@@ -41,7 +41,8 @@ const CheckoutForm = ({ title, price }) => {
 
     // Demande au backend de créer l'intention de paiement, il nous renvoie le clientSecret
     const response = await axios.post(
-      "https://lereacteur-vinted-api.herokuapp.com/v2/payment"
+      "https://lereacteur-vinted-api.herokuapp.com/v2/payment",
+      { title, amount: price }
     );
 
     const clientSecret = response.data.client_secret;

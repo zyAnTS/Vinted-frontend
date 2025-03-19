@@ -5,6 +5,7 @@ import "/src/assets/styles/product_card.css";
 
 import Hero from "../components/Hero";
 import Product_card from "../components/Product_card";
+import Input from "../components/Input";
 
 const Home = ({
   data,
@@ -39,30 +40,20 @@ const Home = ({
             </label>
           </div>
           <div className="filters">
-            <label htmlFor="priceMin">
-              Prix min.
-              <input
-                type="text"
-                value={priceMin}
-                id="priceMin"
-                placeholder="0 €"
-                onChange={(event) => {
-                  setPriceMin(event.target.value);
-                }}
-              />
-            </label>
-            <label htmlFor="priceMax">
-              Prix max.
-              <input
-                type="text"
-                value={priceMax}
-                id="priceMax"
-                placeholder="1000 €"
-                onChange={(event) => {
-                  setPriceMax(event.target.value);
-                }}
-              />
-            </label>
+            <Input
+              label="Prix Min."
+              id="priceMin"
+              type="text"
+              value={priceMin}
+              set={setPriceMin}
+            />
+            <Input
+              label="Prix max."
+              id="priceMax"
+              type="text"
+              value={priceMax}
+              set={setPriceMax}
+            />
           </div>
         </nav>
         {data.offers.map((elem) => {

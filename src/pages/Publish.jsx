@@ -14,6 +14,8 @@ const Publish = ({ userToken }) => {
   const [price, setPrice] = useState("");
   const [exchange, setExchange] = useState(false);
 
+  const [preview, setPreview] = useState([]);
+
   const navigate = useNavigate();
 
   return userToken ? (
@@ -68,10 +70,17 @@ const Publish = ({ userToken }) => {
                   // multiple={true}
                   onChange={(event) => {
                     setFile(event.target.files[0]);
+                    const objectUrl = URL.createObjectURL(
+                      event.target.files[0]
+                    );
+                    setPreview(objectUrl);
                   }}
                 />
                 + Ajouter une photo
               </label>
+              {preview.length > 0 && (
+                <img className="preview" src={preview} alt="Image en preview" />
+              )}
             </div>
             <div className="form-block">
               <label htmlFor="title">
